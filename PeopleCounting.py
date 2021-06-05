@@ -25,12 +25,12 @@ print("[INFO] loading model...")
 net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["caffemodel"])
 
 if not args.get("input", False):
-	print("[INFO] starting video stream...")
+	print("starting video stream...")
 	vs = VideoStream(src=0).start()
 	time.sleep(2.0)
 
 else:
-	print("[INFO] opening video file...")
+	print("opening video file...")
 	vs = cv2.VideoCapture(args["input"])
 
 videowriter = None
@@ -131,15 +131,14 @@ while True:
 
 			if not to.counted:
 
-				if direction < 0 and centroid[1] < HeightOfVideo // 2:
+				if direction > 0 and centroid[1] > HeightOfVideo // 2:
 					totalCount += 1
 					to.counted = True
 
 		trackableObjects[objectID] = to
 
 		text = "ID {}".format(objectID)
-		cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),
-			cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+		cv2.putText(frame, text, (centroid[0] - 10, centroid[1] - 10),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 		cv2.circle(frame, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
 	info = [
@@ -164,8 +163,6 @@ while True:
 	fps.update()
 
 fps.stop()
-print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
-print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 if videowriter is not None:
 	videowriter.release()
