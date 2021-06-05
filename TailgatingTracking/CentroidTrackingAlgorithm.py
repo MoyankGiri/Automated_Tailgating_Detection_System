@@ -17,7 +17,7 @@ class CentroidTrackingAlgorithm:
     def RegisterNewObjects(self,centroid):
 
         self.Objects[self.NextObjectID] = centroid
-        self.Disappeared = 0  # Initialises Number of frames for hwich the object has disappeared as 0
+        self.Disappeared[self.NextObjectID] = 0  # Initialises Number of frames for hwich the object has disappeared as 0
         self.NextObjectID += 1  # Increments the next objectid so that no objects have the same id  
 
     def UnregisterDisappearedObject(self,objID):
@@ -43,7 +43,7 @@ class CentroidTrackingAlgorithm:
 
                 InputObjectCentroids[i] = (Centroid_X,Centroid_Y) 
 
-            if len(self.Objects > 0):
+            if len(self.Objects) > 0:
                 
                 ListOfObjects = list(self.Objects.keys())
                 ListOfCentroidOfObjects = list(self.Objects.values())
